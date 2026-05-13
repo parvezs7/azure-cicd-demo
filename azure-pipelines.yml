@@ -1,0 +1,43 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+# Install .NET SDK
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '10.x'
+
+# Restore backend packages
+- script: |
+    cd backend
+    dotnet restore
+  displayName: 'Restore Backend Packages'
+
+# Build backend
+- script: |
+    cd backend
+    dotnet build --configuration Release
+  displayName: 'Build Backend'
+
+# Install Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '24.x'
+  displayName: 'Install Node.js'
+
+# Install Angular packages
+- script: |
+    cd frontend
+    npm install
+  displayName: 'Install Frontend Packages'
+
+# Build Angular app
+- script: |
+    cd frontend
+    npm run build
+  displayName: 'Build Frontend'
