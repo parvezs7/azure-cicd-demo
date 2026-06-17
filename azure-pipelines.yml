@@ -46,3 +46,10 @@ steps:
     cd backend
     dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish Backend'
+
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure App Service'
+  inputs:
+    azureSubscription: 'parvezs7'
+    appName: 'parvez-api-demo-2026'
+    package: '$(Build.ArtifactStagingDirectory)'
