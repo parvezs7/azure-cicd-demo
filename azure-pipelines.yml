@@ -41,3 +41,8 @@ steps:
     cd frontend
     npm run build
   displayName: 'Build Frontend'
+
+- script: |
+    cd backend
+    dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish Backend'
